@@ -1,1 +1,5 @@
-git rm --cached instance/marketplace.db
+.env
+__pycache__/
+*.pyc
+instance/
+static/uploads/
