@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% endblock %}</title>
+</head>
+<body>
+
+    <nav>
+        <a href="{{ url_for('home') }}">Home</a>
+
+        {% if current_user.is_authenticated %}
+            <a href="{{ url_for('favourites') }}">Favourites</a>
+            <a href="{{ url_for('my_listing') }}">My Listings</a>
+            <a href="{{ url_for('create_listing') }}">Create Listing</a>
+            <span>{{ current_user.name }}</span>
+            <a href="{{ url_for('logout') }}">Sign out</a>
+        {% else %}
+            <a href="{{ url_for('google_login') }}">Sign in</a>
+        {% endif %}
+    </nav>
+
+    {% block content %}{% endblock %}
+</body>
+</html>

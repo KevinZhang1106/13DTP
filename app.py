@@ -2,7 +2,7 @@ from flask import Flask, render_template, url_for, redirect
 from flask_sqlalchemy import SQLAlchemy
 
 from dotenv import load_dotenv
-from flask_login import LoginManager, UserMixin, login_user, logout_user, login_required
+from flask_login import LoginManager, UserMixin, login_user, logout_user, login_required, current_user
 from authlib.integrations.flask_client import OAuth
 import os
 
@@ -15,7 +15,7 @@ db = SQLAlchemy(app)
 
 app.secret_key = os.getenv("SECRET_KEY")
 login_manager = LoginManager(app)
-login_manager.login_view = "login"
+login_manager.login_view = "google_login"
 
 oauth = OAuth(app)
 google = oauth.register(
@@ -51,13 +51,26 @@ class Listing(db.Model):
 
 
 @app.route('/')
-def login():
-    return render_template("login.html")
-
-
-@app.route('/home')
 def home():
     return render_template("home.html")
+
+
+@app.route('/create-listing')
+@login_required
+def create_listing():
+    return render_template('create_listing.html')
+
+
+@app.route('/my-listing')
+@login_required
+def my_listing():
+    return render_template('my_listing.html')
+
+
+@app.route('/favourites')
+@login_required
+def favourites():
+    return render_template('favourites.html')
 
 
 @login_manager.user_loader
@@ -93,7 +106,7 @@ def google_callback():
 @login_required
 def logout():
     logout_user()
-    return redirect(url_for("login"))
+    return redirect(url_for("home"))
 
 
 with app.app_context():
