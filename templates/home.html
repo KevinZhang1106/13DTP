@@ -3,4 +3,18 @@
 
 {% block content %}
 <h1>Home</h1>
+
+{% if listings %}
+    {% for listing in listings %}
+        <div>
+            <h3>{{ listing.title }}</h3>
+            <p>${{ listing.price }}</p>
+            <p>{{ listing.location }}</p>
+            <p>By {{ listing.seller.name }}</p>
+        </div>
+    {% endfor %}
+{% endif %}
+
+
+
 {% endblock %}

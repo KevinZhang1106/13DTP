@@ -3,4 +3,20 @@
 
 {% block content %}
 <h1>Create Listing</h1>
+
+<form method="POST" enctype="multipart/form-data">
+    <label>Title</label>
+    <input type="text" name="title" required>
+
+    <label>Description</label>
+    <textarea name="description" required></textarea>
+
+    <label>Price</label>
+    <input type="number" name="price" step="0.01" min="0" required>
+    
+    <label>Location</label>
+    <input type="text" name="location" required>
+
+    <button type="submit">Post Listing</button>
+</form>
 {% endblock %}

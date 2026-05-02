@@ -1,4 +1,4 @@
-from flask import Flask, render_template, url_for, redirect
+from flask import Flask, render_template, url_for, redirect, request
 from flask_sqlalchemy import SQLAlchemy
 
 from dotenv import load_dotenv
@@ -38,6 +38,7 @@ class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     google_id = db.Column(db.String(128), unique=True, nullable=False)
     name = db.Column(db.String(128), nullable=False)
+    listings = db.relationship("Listing", backref="seller")
 
 
 class Listing(db.Model):
@@ -52,12 +53,30 @@ class Listing(db.Model):
 
 @app.route('/')
 def home():
-    return render_template("home.html")
+    listings = Listing.query.all()
+    return render_template("home.html", listings=listings)
 
 
-@app.route('/create-listing')
+@app.route('/create-listing', methods=["GET", "POST"])
 @login_required
 def create_listing():
+    if request.method == "POST":
+        title = request.form.get("title")
+        description = request.form.get("description")
+        price = request.form.get("price")
+        location = request.form.get("location")
+
+        listing = Listing(
+            title=title,
+            description=description,
+            price=float(price),
+            location=location,
+            user_id=current_user.id
+        )
+        db.session.add(listing)
+        db.session.commit()
+        return redirect(url_for("home"))
+
     return render_template('create_listing.html')
 
 
