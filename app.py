@@ -80,10 +80,44 @@ def create_listing():
     return render_template('create_listing.html')
 
 
+@app.route('/edit-listing/<int:listing_id>', methods=["GET", "POST"])
+@login_required
+def edit_listing(listing_id):
+    listing = Listing.query.get(listing_id)
+
+    if listing.user_id != current_user.id:
+        return redirect(url_for('home'))
+    
+    if request.method == "POST":
+        listing.title = request.form.get("title")
+        listing.description = request.form.get("description")
+        listing.price = float(request.form.get("price"))
+        listing.location = request.form.get("location")
+
+        db.session.commit()
+        return redirect(url_for('my_listing'))
+    
+    return render_template('edit_listing.html', listing=listing)
+
+
+@app.route('/delete-listing/<int:listing_id>', methods=["POST"])
+@login_required
+def delete_listing(listing_id):
+    listing = Listing.query.get(listing_id)
+
+    if listing.user_id != current_user.id:
+        return redirect(url_for("home"))
+    
+    db.session.delete(listing)
+    db.session.commit()
+    return redirect(url_for("my_listing"))
+
+
 @app.route('/my-listing')
 @login_required
 def my_listing():
-    return render_template('my_listing.html')
+    listings = Listing.query.filter_by(user_id=current_user.id).all()
+    return render_template('my_listing.html', listings=listings)
 
 
 @app.route('/favourites')

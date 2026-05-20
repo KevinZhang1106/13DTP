@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}Create Listing — Market{% endblock %}
+
+{% block content %}
+<h1>Edit Listing</h1>
+
+<form method="POST" enctype="multipart/form-data">
+    <label>Title</label>
+    <input type="text" name="title" value="{{ listing.title }}"required>
+
+    <label>Description</label>
+    <textarea name="description" required>{{ listing.description }}</textarea>
+
+    <label>Price</label>
+    <input type="number" name="price" step="0.01" min="0" value="{{ listing.price }}"required>
+    
+    <label>Location</label>
+    <input type="text" name="location" value="{{ listing.location }}" required>
+
+    <button type="submit">Save changes</button>
+</form>
+{% endblock %}
