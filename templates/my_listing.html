@@ -6,6 +6,11 @@
 
 {% for listing in listings %}
     <div>
+        {% if listing.image_filename %}
+            <img src="{{ url_for('static', filename='uploads/' ~ listing.image_filename)}}" width="200">
+        {% else %}
+            <p>no image</p>
+        {% endif %}
         <h3>{{ listing.title }}</h3>
         <p>{{ listing.price }}</p>
         <a href="{{ url_for('edit_listing', listing_id=listing.id) }}">Edit</a>

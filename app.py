@@ -5,13 +5,27 @@ from dotenv import load_dotenv
 from flask_login import LoginManager, UserMixin, login_user, logout_user, login_required, current_user
 from authlib.integrations.flask_client import OAuth
 import os
+from werkzeug.utils import secure_filename
+from datetime import datetime, timezone
+
 
 load_dotenv()
+
 
 app = Flask(__name__)
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///marketplace.db"
 
+UPLOAD_FOLDER = os.path.join("static", "uploads")
+ALLOWED_EXTENSIONS = {"png", "jpg", "jpeg", "gif", "webp"}
+app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
+
+
+def allowed_file(filename):
+    return "." in filename and filename.rsplit(".", 1)[1].lower() in ALLOWED_EXTENSIONS
+
+
 db = SQLAlchemy(app)
+
 
 app.secret_key = os.getenv("SECRET_KEY")
 login_manager = LoginManager(app)
@@ -65,12 +79,21 @@ def create_listing():
         description = request.form.get("description")
         price = request.form.get("price")
         location = request.form.get("location")
+        image = request.files.get("image")
+
+        image_filename = None
+        if image and allowed_file(image.filename):
+            filename = secure_filename(image.filename)
+            timestamp = datetime.now(timezone.utc).strftime("%Y%m%d%H%M%S")
+            image_filename = f"{timestamp}_{filename}"
+            image.save(os.path.join(app.config["UPLOAD_FOLDER"], image_filename))
 
         listing = Listing(
             title=title,
             description=description,
             price=float(price),
             location=location,
+            image_filename=image_filename,
             user_id=current_user.id
         )
         db.session.add(listing)
@@ -93,6 +116,13 @@ def edit_listing(listing_id):
         listing.description = request.form.get("description")
         listing.price = float(request.form.get("price"))
         listing.location = request.form.get("location")
+
+        image = request.files.get("image")
+        if image and allowed_file(image.filename):
+            filename = secure_filename(image.filename)
+            timestamp = datetime.now(timezone.utc).strftime("%Y%m%d%H%M%S")
+            listing.image_filename = f"{timestamp}_{filename}"
+            image.save(os.path.join(app.config["UPLOAD_FOLDER"], listing.image_filename))
 
         db.session.commit()
         return redirect(url_for('my_listing'))
