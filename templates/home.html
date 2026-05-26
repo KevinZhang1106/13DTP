@@ -4,6 +4,10 @@
 {% block content %}
 <h1>Home</h1>
 
+{% if search %}
+    <p>Results for "{{ search }}"</p>
+{% endif %}
+
 {% if listings %}
     {% for listing in listings %}
         <div>
@@ -18,6 +22,12 @@
             <p>By {{ listing.seller.name }}</p>
         </div>
     {% endfor %}
+{% else %}
+    {% if search %}
+        <p>No results found for "{{ search }}"</p>
+    {% else %}
+        <p>No listings yet.</p>
+    {% endif %}
 {% endif %}
 
 

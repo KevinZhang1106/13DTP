@@ -67,8 +67,20 @@ class Listing(db.Model):
 
 @app.route('/')
 def home():
-    listings = Listing.query.all()
-    return render_template("home.html", listings=listings)
+    search = request.args.get("search", "").strip()
+
+    if search:
+        listings = Listing.query.filter(
+            db.or_(
+                Listing.title.ilike(f"%{search}%"),
+                Listing.description.ilike(f"%{search}%"),
+                Listing.location.ilike(f"%{search}%"),
+            )
+        ).all()
+    else:
+        listings = Listing.query.all()
+
+    return render_template("home.html", listings=listings, search=search)
 
 
 @app.route('/create-listing', methods=["GET", "POST"])

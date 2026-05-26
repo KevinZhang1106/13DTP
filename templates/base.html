@@ -10,6 +10,11 @@
     <nav>
         <a href="{{ url_for('home') }}">Home</a>
 
+        <form method="GET" action="{{ url_for('home') }}">
+            <input type="text" name="search" placeholder="Search listings..." value="{{ request.args.get('search', '') }}">
+            <button type="submit">Search</button>
+        </form>
+
         {% if current_user.is_authenticated %}
             <a href="{{ url_for('favourites') }}">Favourites</a>
             <a href="{{ url_for('my_listing') }}">My Listings</a>
