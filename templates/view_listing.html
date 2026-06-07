@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block title %}{{ listing.title }}{% endblock %}
+
+{% block content %}
+<a href="{{ url_for('home') }}">Back to listings</a>
+
+<h1>{{ listing.title }}</h1>
+
+{% if listing.image_filename %}
+    <img src="{{ url_for('static', filename='uploads/' ~ listing.image_filename) }}" width="400">
+{% else %}
+    <p>No image provided</p>
+{% endif %}
+
+<p>Price: ${{ listing.price }}</p>
+<p>Location: {{ listing.location }}</p>
+<p>Description: {{ listing.description }}</p>
+<p>Listed by: {{ listing.seller.name }}</p>
+
+{% endblock %}

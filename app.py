@@ -162,6 +162,12 @@ def my_listing():
     return render_template('my_listing.html', listings=listings)
 
 
+@app.route('/listing/<int:listing_id>')
+def view_listing(listing_id):
+    listing = Listing.query.get_or_404(listing_id)
+    return render_template('view_listing.html', listing=listing)
+
+
 @app.route('/favourites')
 @login_required
 def favourites():
