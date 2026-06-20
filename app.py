@@ -53,7 +53,8 @@ class User(UserMixin, db.Model):
     google_id = db.Column(db.String(128), unique=True, nullable=False)
     name = db.Column(db.String(128), nullable=False)
     listings = db.relationship("Listing", backref="seller")
-
+    favourites = db.relationship("Listing", secondary=favourites_table)
+    
 
 class Listing(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -171,7 +172,22 @@ def view_listing(listing_id):
 @app.route('/favourites')
 @login_required
 def favourites():
-    return render_template('favourites.html')
+    listings = current_user.favourites
+    return render_template('favourites.html', listings=listings)
+
+
+@app.route('/listing/<int:listing_id>/favourite', methods=["POST"])
+@login_required
+def toggle_favourite(listing_id):
+    listing = Listing.query.get(listing_id)
+
+    if listing in current_user.favourites:
+        current_user.favourites.remove(listing)
+    else:
+        current_user.favourites.append(listing)
+
+    db.session.commit()
+    return redirect(url_for('view_listing', listing_id=listing_id))
 
 
 @login_manager.user_loader

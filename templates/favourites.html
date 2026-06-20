@@ -3,4 +3,21 @@
 
 {% block content %}
 <h1>Favourites</h1>
+
+{% if listings %}
+    {% for listing in listings %}
+        <a href="{{ url_for('view_listing', listing_id=listing.id) }}">
+            <div>
+                {% if listing.image_filename %}
+                    <img src="{{ url_for('static', filename='uploads/' ~ listing.image_filename) }}" width="200">
+                {% endif %}
+                <h3>{{ listing.title }}</h3>
+                <p>${{ listing.price }}</p>
+            </div>
+        </a>
+    {% endfor %}
+{% else %}
+    <p>You haven't favourited anything yet.</p>
+{% endif %}
+
 {% endblock %}

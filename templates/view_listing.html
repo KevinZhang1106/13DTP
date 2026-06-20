@@ -17,4 +17,14 @@
 <p>Description: {{ listing.description }}</p>
 <p>Listed by: {{ listing.seller.name }}</p>
 
+{% if current_user.is_authenticated %}
+    <form method="POST" action="{{ url_for('toggle_favourite', listing_id=listing.id) }}">
+        {% if listing in current_user.favourites %}
+            <button type="submit">♥ Remove from favourites</button>
+        {% else %}
+            <button type="submit">♡ Add to favourites</button>
+        {% endif %}
+    </form>
+{% endif %}
+
 {% endblock %}
