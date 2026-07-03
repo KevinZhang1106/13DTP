@@ -27,4 +27,14 @@
     </form>
 {% endif %}
 
+
+{% if current_user.is_authenticated %}
+    {% if current_user.id != listing.user_id %}
+        <p>Contact seller: {{ listing.seller.email }}</p>
+    {% endif %}
+{% else %}
+    <a href="{{ url_for('google_login') }}">Sign in to contact seller</a>
+{% endif %}
+
+
 {% endblock %}

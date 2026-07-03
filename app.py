@@ -52,6 +52,7 @@ class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     google_id = db.Column(db.String(128), unique=True, nullable=False)
     name = db.Column(db.String(128), nullable=False)
+    email = db.Column(db.String(256), nullable=True)
     listings = db.relationship("Listing", backref="seller")
     favourites = db.relationship("Listing", secondary=favourites_table)
     
@@ -211,6 +212,7 @@ def google_callback():
         user = User(
             google_id=google_id,
             name=userinfo.get("name", "User"),
+            email=userinfo.get("email"),
         )
         db.session.add(user)
         db.session.commit()
