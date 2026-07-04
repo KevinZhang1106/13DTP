@@ -4,28 +4,35 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style/base.css') }}">
+
 </head>
 <body>
 
-    <nav>
-        <a href="{{ url_for('home') }}">Home</a>
+<nav>
+    <a href="{{ url_for('home') }}" class="nav-logo">Market</a>
 
-        <form method="GET" action="{{ url_for('home') }}">
-            <input type="text" name="search" placeholder="Search listings..." value="{{ request.args.get('search', '') }}">
-            <button type="submit">Search</button>
-        </form>
+    <form class="nav-search" method="GET" action="{{ url_for('home') }}">
+        <input type="text" name="search" placeholder="Search listings..." value="{{ request.args.get('search', '') }}">
+        <button type="submit">Search</button>
+    </form>
 
+    <div class="nav-links">
         {% if current_user.is_authenticated %}
-            <a href="{{ url_for('favourites') }}">Favourites</a>
-            <a href="{{ url_for('my_listing') }}">My Listings</a>
-            <a href="{{ url_for('create_listing') }}">Create Listing</a>
-            <span>{{ current_user.name }}</span>
-            <a href="{{ url_for('logout') }}">Sign out</a>
+            <a href="{{ url_for('favourites') }}" class="nav-link">Favourites</a>
+            <a href="{{ url_for('my_listing') }}" class="nav-link">My Listings</a>
+            <span class="nav-name">{{ current_user.name }}</span>
+            <a href="{{ url_for('create_listing') }}" class="btn-nav">+ List item</a>
+            <a href="{{ url_for('logout') }}" class="nav-link">Sign out</a>
         {% else %}
-            <a href="{{ url_for('google_login') }}">Sign in</a>
+            <a href="{{ url_for('google_login') }}" class="btn-nav">Sign in</a>
         {% endif %}
-    </nav>
+    </div>
+</nav>
 
+<main>
     {% block content %}{% endblock %}
+</main>
+
 </body>
 </html>

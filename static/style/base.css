@@ -1,0 +1,138 @@
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+    --orange:     #f05a28;
+    --orange-dk:  #d44a1a;
+    --orange-lt:  #fff4f0;
+    --bg:         #fafaf9;
+    --surface:    #ffffff;
+    --border:     #ebebeb;
+    --text:       #111110;
+    --muted:      #888580;
+    --radius:     10px;
+    --radius-sm:  6px;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    line-height: 1.6;
+}
+
+a { color: inherit; text-decoration: none; }
+img { display: block; max-width: 100%; }
+
+/* ── Navbar ── */
+nav {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 0 32px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.nav-logo {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 1.15rem;
+    color: var(--orange);
+    letter-spacing: -.02em;
+    white-space: nowrap;
+}
+
+.nav-search {
+    flex: 1;
+    max-width: 400px;
+    display: flex;
+    border: 1.5px solid var(--border);
+    border-radius: 999px;
+    overflow: hidden;
+    transition: border-color .15s;
+}
+
+.nav-search:focus-within { border-color: var(--orange); }
+
+.nav-search input {
+    flex: 1;
+    border: none;
+    background: transparent;
+    padding: 7px 16px;
+    font-family: 'Inter', sans-serif;
+    font-size: .875rem;
+    color: var(--text);
+    outline: none;
+}
+
+.nav-search button {
+    border: none;
+    background: transparent;
+    padding: 0 14px;
+    cursor: pointer;
+    color: var(--muted);
+    font-size: .875rem;
+}
+
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin-left: auto;
+}
+
+.nav-link {
+    font-size: .875rem;
+    font-weight: 500;
+    color: var(--muted);
+    padding: 6px 12px;
+    border-radius: var(--radius-sm);
+    transition: color .15s, background .15s;
+}
+
+.nav-link:hover { color: var(--text); background: var(--bg); }
+
+.nav-name {
+    font-size: .875rem;
+    font-weight: 500;
+    color: var(--muted);
+    padding: 6px 12px;
+}
+
+.btn-nav {
+    background: var(--orange);
+    color: #fff;
+    font-size: .875rem;
+    font-weight: 500;
+    padding: 7px 16px;
+    border-radius: var(--radius-sm);
+    transition: background .15s;
+    margin-left: 4px;
+}
+
+.btn-nav:hover { background: var(--orange-dk); }
+
+/* ── Main layout ── */
+main {
+    flex: 1;
+    max-width: 1200px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 40px 32px;
+}
+
+/* ── Typing ── */
+h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.75rem;
+    font-weight: 800;
+    letter-spacing: -.03em;
+    margin-bottom: 24px;
+}
