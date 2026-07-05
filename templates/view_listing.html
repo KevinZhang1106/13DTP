@@ -38,9 +38,9 @@
                     <form method="POST" action="{{ url_for('toggle_favourite', listing_id=listing.id) }}">
                         <button type="submit" class="btn btn-outline">
                             {% if listing in current_user.favourites %}
-                                ♥ Saved
+                                ♥ Favourited
                             {% else %}
-                                ♡ Save listing
+                                ♡ Favourited listing
                             {% endif %}
                         </button>
                     </form>
@@ -51,7 +51,7 @@
                     </form>
                 {% endif %}
             {% else %}
-                <a href="{{ url_for('google_login') }}" class="btn btn-outline">Sign in to save</a>
+                <a href="{{ url_for('google_login') }}" class="btn btn-outline">Sign in to favourite</a>
             {% endif %}
         </div>
     </div>
