@@ -1,40 +1,61 @@
 {% extends "base.html" %}
-{% block title %}{{ listing.title }}{% endblock %}
+{% block title %}{{ listing.title }} — Market{% endblock %}
 
 {% block content %}
-<a href="{{ url_for('home') }}">Back to listings</a>
 
-<h1>{{ listing.title }}</h1>
+<a href="{{ url_for('home') }}" class="back-link">← Back to listings</a>
 
-{% if listing.image_filename %}
-    <img src="{{ url_for('static', filename='uploads/' ~ listing.image_filename) }}" width="400">
-{% else %}
-    <p>No image provided</p>
-{% endif %}
+<div class="view-layout">
 
-<p>Price: ${{ listing.price }}</p>
-<p>Location: {{ listing.location }}</p>
-<p>Description: {{ listing.description }}</p>
-<p>Listed by: {{ listing.seller.name }}</p>
-
-{% if current_user.is_authenticated %}
-    <form method="POST" action="{{ url_for('toggle_favourite', listing_id=listing.id) }}">
-        {% if listing in current_user.favourites %}
-            <button type="submit">♥ Remove from favourites</button>
+    <div>
+        {% if listing.image_filename %}
+            <img src="{{ url_for('static', filename='uploads/' ~ listing.image_filename) }}" class="view-img" alt="{{ listing.title }}">
         {% else %}
-            <button type="submit">♡ Add to favourites</button>
+            <div class="view-no-img">No image provided</div>
         {% endif %}
-    </form>
-{% endif %}
+    </div>
 
+    <div>
+        <p class="view-price">${{ listing.price }}</p>
+        <h1 class="view-title">{{ listing.title }}</h1>
 
-{% if current_user.is_authenticated %}
-    {% if current_user.id != listing.user_id %}
-        <p>Contact seller: {{ listing.seller.email }}</p>
-    {% endif %}
-{% else %}
-    <a href="{{ url_for('google_login') }}">Sign in to contact seller</a>
-{% endif %}
+        <div class="view-location">
+            Location: {{ listing.location }}
+        </div>
 
+        <p class="view-description">Description: {{ listing.description }}</p>
+
+        <div class="view-seller">
+            <span>Listed by </span><strong>{{ listing.seller.name }}</strong>
+            {% if current_user.is_authenticated and current_user.id != listing.user_id %}
+                <br><span>Contact: </span><strong>{{ listing.seller.email }}</strong>
+            {% endif %}
+        </div>
+
+        <div class="view-actions">
+            {% if current_user.is_authenticated %}
+                {% if current_user.id != listing.user_id %}
+                    <form method="POST" action="{{ url_for('toggle_favourite', listing_id=listing.id) }}">
+                        <button type="submit" class="btn btn-outline">
+                            {% if listing in current_user.favourites %}
+                                ♥ Saved
+                            {% else %}
+                                ♡ Save listing
+                            {% endif %}
+                        </button>
+                    </form>
+                {% else %}
+                    <a href="{{ url_for('edit_listing', listing_id=listing.id) }}" class="btn btn-outline">Edit</a>
+                    <form method="POST" action="{{ url_for('delete_listing', listing_id=listing.id) }}" onsubmit="return confirm('Delete this listing?')">
+                        <button type="submit" class="btn btn-delete">Delete</button>
+                    </form>
+                {% endif %}
+            {% else %}
+                <a href="{{ url_for('google_login') }}" class="btn btn-outline">Sign in to save</a>
+            {% endif %}
+        </div>
+    </div>
+
+</div>
 
 {% endblock %}

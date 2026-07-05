@@ -1,37 +1,48 @@
 {% extends "base.html" %}
-{% block title %}Home — Market{% endblock %}
+{% block title %}Market — Buy & sell locally{% endblock %}
 
 {% block content %}
-<h1>Home</h1>
 
-{% if search %}
-    <p>Results for "{{ search }}"</p>
-{% endif %}
+<div class="page-header">
+    <h1>
+        {% if search %}
+            Results for "{{ search }}"
+        {% else %}
+            All listings
+        {% endif %}
+    </h1>
+    {% if search %}
+        <a href="{{ url_for('home') }}" class="btn btn-outline">Clear search</a>
+    {% endif %}
+</div>
 
 {% if listings %}
-    {% for listing in listings %}
-        <a href="{{ url_for('view_listing', listing_id=listing.id) }}">
-            <div>
-                {% if listing.image_filename %}
-                    <img src="{{ url_for('static', filename='uploads/' ~ listing.image_filename)}}" width="200">
-                {% else %}
-                    <p>no image</p>
-                {% endif %}
-                <h3>{{ listing.title }}</h3>
-                <p>${{ listing.price }}</p>
-                <p>{{ listing.location }}</p>
-                <p>By {{ listing.seller.name }}</p>
-            </div>
-        </a>
-    {% endfor %}
+    <div class="listings-grid">
+        {% for listing in listings %}
+            <a href="{{ url_for('view_listing', listing_id=listing.id) }}" class="listing-card">
+                <div class="listing-card-img">
+                    {% if listing.image_filename %}
+                        <img src="{{ url_for('static', filename='uploads/' ~ listing.image_filename) }}" alt="{{ listing.title }}">
+                    {% else %}
+                        <div class="listing-card-no-img">No image</div>
+                    {% endif %}
+                </div>
+                <div class="listing-card-body">
+                    <p class="listing-card-price">${{ listing.price }}</p>
+                    <p class="listing-card-title">{{ listing.title }}</p>
+                    <p class="listing-card-details">{{ listing.location }} · {{ listing.seller.name }}</p>
+                </div>
+            </a>
+        {% endfor %}
+    </div>
 {% else %}
-    {% if search %}
-        <p>No results found for "{{ search }}"</p>
-    {% else %}
-        <p>No listings yet.</p>
-    {% endif %}
+    <div class="empty">
+        {% if search %}
+            <h2>No results for "{{ search }}"</h2>
+        {% else %}
+            <h2>Nothing listed yet</h2>
+        {% endif %}
+    </div>
 {% endif %}
-
-
 
 {% endblock %}
