@@ -388,3 +388,46 @@ main {
 }
  
 .my-list-actions { display: flex; gap: 8px; flex-shrink: 0; }
+
+/*__Forms__*/
+
+.form-wrap {
+    max-width: 580px;
+}
+ 
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 20px;
+}
+ 
+label {
+    font-size: .875rem;
+    font-weight: 500;
+    color: var(--text);
+}
+ 
+input[type="text"],
+input[type="number"],
+input[type="file"],
+textarea {
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 9px 13px;
+    font-family: 'Inter', sans-serif;
+    font-size: .9rem;
+    color: var(--text);
+    background: var(--surface);
+    outline: none;
+    transition: border-color .15s;
+    width: 100%;
+}
+ 
+input:focus, textarea:focus { border-color: var(--orange); }
+ 
+textarea { resize: vertical; min-height: 120px; }
+ 
+input[type="file"] { padding: 7px 13px; cursor: pointer; }
+ 
+.form-actions { display: flex; gap: 10px; margin-top: 8px; }

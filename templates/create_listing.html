@@ -1,25 +1,44 @@
 {% extends "base.html" %}
-{% block title %}Create Listing — Market{% endblock %}
+{% block title %}List an item — Market{% endblock %}
 
 {% block content %}
-<h1>Create Listing</h1>
 
-<form method="POST" enctype="multipart/form-data">
-    <label>Title</label>
-    <input type="text" name="title" required>
+<h1>List an item</h1>
 
-    <label>Description</label>
-    <textarea name="description" required></textarea>
+<div class="form-wrap">
+    <form method="POST" enctype="multipart/form-data">
 
-    <label>Price</label>
-    <input type="number" name="price" step="0.01" min="0" required>
-    
-    <label>Location</label>
-    <input type="text" name="location" required>
+        <div class="form-group">
+            <label>Title</label>
+            <input type="text" name="title" required>
+        </div>
 
-    <label>Image</label>
-    <input type="file" name="image" accept="image/*">
+        <div class="form-group">
+            <label>Description</label>
+            <textarea name="description" required></textarea>
+        </div>
 
-    <button type="submit">Post Listing</button>
-</form>
+        <div class="form-group">
+            <label>Price (NZD)</label>
+            <input type="number" name="price" step="0.01" min="0" required>
+        </div>
+
+        <div class="form-group">
+            <label>Location</label>
+            <input type="text" name="location" required>
+        </div>
+
+        <div class="form-group">
+            <label>Image</label>
+            <input type="file" name="image" accept="image/*">
+        </div>
+
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary">Post listing</button>
+            <a href="{{ url_for('home') }}" class="btn btn-outline">Cancel</a>
+        </div>
+
+    </form>
+</div>
+
 {% endblock %}

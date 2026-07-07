@@ -1,25 +1,50 @@
 {% extends "base.html" %}
-{% block title %}Create Listing — Market{% endblock %}
+{% block title %}Edit listing — Market{% endblock %}
 
 {% block content %}
-<h1>Edit Listing</h1>
 
-<form method="POST" enctype="multipart/form-data">
-    <label>Title</label>
-    <input type="text" name="title" value="{{ listing.title }}"required>
+<a href="{{ url_for('my_listing') }}" class="back-link">← My listings</a>
 
-    <label>Description</label>
-    <textarea name="description" required>{{ listing.description }}</textarea>
+<h1>Edit listing</h1>
 
-    <label>Price</label>
-    <input type="number" name="price" step="0.01" min="0" value="{{ listing.price }}"required>
-    
-    <label>Location</label>
-    <input type="text" name="location" value="{{ listing.location }}" required>
+<div class="form-wrap">
+    <form method="POST" enctype="multipart/form-data">
 
-    <label>Replace Image</label>
-    <input type="file" name="image" accept="image/*">
+        <div class="form-group">
+            <label>Title</label>
+            <input type="text" name="title" value="{{ listing.title }}" required>
+        </div>
 
-    <button type="submit">Save changes</button>
-</form>
+        <div class="form-group">
+            <label>Description</label>
+            <textarea name="description" required>{{ listing.description }}</textarea>
+        </div>
+
+        <div class="form-group">
+            <label>Price (NZD)</label>
+            <input type="number" name="price" step="0.01" min="0" value="{{ listing.price }}" required>
+        </div>
+
+        <div class="form-group">
+            <label>Location</label>
+            <input type="text" name="location" value="{{ listing.location }}" required>
+        </div>
+
+        <div class="form-group">
+            <label>Image</label>
+            {% if listing.image_filename %}
+                <img src="{{ url_for('static', filename='uploads/' ~ listing.image_filename) }}"
+                     style="width: 120px; border-radius: 6px; margin-bottom: 8px; border: 1px solid var(--border);">
+            {% endif %}
+            <input type="file" name="image" accept="image/*">
+        </div>
+
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary">Save changes</button>
+            <a href="{{ url_for('my_listing') }}" class="btn btn-outline">Cancel</a>
+        </div>
+
+    </form>
+</div>
+
 {% endblock %}

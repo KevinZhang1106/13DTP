@@ -72,7 +72,7 @@ def home():
     search = request.args.get("search", "").strip()
 
     if search:
-        listings = Listing.query.filter(
+        listings = Listing.query.filter(    
             db.or_(
                 Listing.title.ilike(f"%{search}%"),
                 Listing.description.ilike(f"%{search}%"),
