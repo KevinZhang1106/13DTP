@@ -59,7 +59,7 @@ nav {
 
 .nav-search {
     flex: 1;
-    max-width: 400px;
+    max-width: 666px;
     display: flex;
     border: 1.5px solid var(--border);
     border-radius: 999px;
@@ -431,3 +431,4 @@ textarea { resize: vertical; min-height: 120px; }
 input[type="file"] { padding: 7px 13px; cursor: pointer; }
  
 .form-actions { display: flex; gap: 10px; margin-top: 8px; }
+

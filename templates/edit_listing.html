@@ -27,7 +27,34 @@
 
         <div class="form-group">
             <label>Location</label>
-            <input type="text" name="location" value="{{ listing.location }}" required>
+            <select name="location" required>
+                <option value="" disabled selected>Select a city...</option>
+                <option value="Auckland">Auckland</option>
+                <option value="Wellington">Wellington</option>
+                <option value="Christchurch">Christchurch</option>
+                <option value="Hamilton">Hamilton</option>
+                <option value="Tauranga">Tauranga</option>
+                <option value="Napier">Napier</option>
+                <option value="Hastings">Hastings</option>
+                <option value="Dunedin">Dunedin</option>
+                <option value="Palmerston North">Palmerston North</option>
+                <option value="Nelson">Nelson</option>
+                <option value="Rotorua">Rotorua</option>
+                <option value="New Plymouth">New Plymouth</option>
+                <option value="Whangarei">Whangarei</option>
+                <option value="Invercargill">Invercargill</option>
+                <option value="Whanganui">Whanganui</option>
+                <option value="Gisborne">Gisborne</option>
+                <option value="Blenheim">Blenheim</option>
+                <option value="Pukekohe">Pukekohe</option>
+                <option value="Timaru">Timaru</option>
+                <option value="Taupo">Taupo</option>
+                <option value="Queenstown">Queenstown</option>
+                <option value="Kapiti Coast">Kapiti Coast</option>
+                <option value="Upper Hutt">Upper Hutt</option>
+                <option value="Lower Hutt">Lower Hutt</option>
+                <option value="Porirua">Porirua</option>
+            </select>
         </div>
 
         <div class="form-group">
@@ -46,5 +73,4 @@
 
     </form>
 </div>
-
 {% endblock %}

@@ -70,18 +70,21 @@ class Listing(db.Model):
 @app.route('/')
 def home():
     search = request.args.get("search", "").strip()
+    location = request.args.get("location", "").strip()
+    query = Listing.query
 
     if search:
-        listings = Listing.query.filter(    
+        query = query.filter(
             db.or_(
                 Listing.title.ilike(f"%{search}%"),
                 Listing.description.ilike(f"%{search}%"),
-                Listing.location.ilike(f"%{search}%"),
             )
-        ).all()
-    else:
-        listings = Listing.query.all()
+        )
 
+    if location:
+        query = query.filter(Listing.location == location)
+
+    listings = query.all()
     return render_template("home.html", listings=listings, search=search)
 
 

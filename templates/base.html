@@ -14,6 +14,34 @@
 
     <form class="nav-search" method="GET" action="{{ url_for('home') }}">
         <input type="text" name="search" placeholder="Search listings..." value="{{ request.args.get('search', '') }}">
+         <select name="location">
+            <option value="">All locations</option>
+            <option value="Auckland" {{ 'selected' if request.args.get('location') == 'Auckland' }}>Auckland</option>
+            <option value="Wellington" {{ 'selected' if request.args.get('location') == 'Wellington' }}>Wellington</option>
+            <option value="Christchurch" {{ 'selected' if request.args.get('location') == 'Christchurch' }}>Christchurch</option>
+            <option value="Hamilton" {{ 'selected' if request.args.get('location') == 'Hamilton' }}>Hamilton</option>
+            <option value="Tauranga" {{ 'selected' if request.args.get('location') == 'Tauranga' }}>Tauranga</option>
+            <option value="Napier" {{ 'selected' if request.args.get('location') == 'Napier' }}>Napier</option>
+            <option value="Hastings" {{ 'selected' if request.args.get('location') == 'Hastings' }}>Hastings</option>
+            <option value="Dunedin" {{ 'selected' if request.args.get('location') == 'Dunedin' }}>Dunedin</option>
+            <option value="Palmerston North" {{ 'selected' if request.args.get('location') == 'Palmerston North' }}>Palmerston North</option>
+            <option value="Nelson" {{ 'selected' if request.args.get('location') == 'Nelson' }}>Nelson</option>
+            <option value="Rotorua" {{ 'selected' if request.args.get('location') == 'Rotorua' }}>Rotorua</option>
+            <option value="New Plymouth" {{ 'selected' if request.args.get('location') == 'New Plymouth' }}>New Plymouth</option>
+            <option value="Whangarei" {{ 'selected' if request.args.get('location') == 'Whangarei' }}>Whangarei</option>
+            <option value="Invercargill" {{ 'selected' if request.args.get('location') == 'Invercargill' }}>Invercargill</option>
+            <option value="Whanganui" {{ 'selected' if request.args.get('location') == 'Whanganui' }}>Whanganui</option>
+            <option value="Gisborne" {{ 'selected' if request.args.get('location') == 'Gisborne' }}>Gisborne</option>
+            <option value="Blenheim" {{ 'selected' if request.args.get('location') == 'Blenheim' }}>Blenheim</option>
+            <option value="Pukekohe" {{ 'selected' if request.args.get('location') == 'Pukekohe' }}>Pukekohe</option>
+            <option value="Timaru" {{ 'selected' if request.args.get('location') == 'Timaru' }}>Timaru</option>
+            <option value="Taupo" {{ 'selected' if request.args.get('location') == 'Taupo' }}>Taupo</option>
+            <option value="Queenstown" {{ 'selected' if request.args.get('location') == 'Queenstown' }}>Queenstown</option>
+            <option value="Kapiti Coast" {{ 'selected' if request.args.get('location') == 'Kapiti Coast' }}>Kapiti Coast</option>
+            <option value="Upper Hutt" {{ 'selected' if request.args.get('location') == 'Upper Hutt' }}>Upper Hutt</option>
+            <option value="Lower Hutt" {{ 'selected' if request.args.get('location') == 'Lower Hutt' }}>Lower Hutt</option>
+            <option value="Porirua" {{ 'selected' if request.args.get('location') == 'Porirua' }}>Porirua</option>
+        </select>
         <button type="submit">Search</button>
     </form>
 
